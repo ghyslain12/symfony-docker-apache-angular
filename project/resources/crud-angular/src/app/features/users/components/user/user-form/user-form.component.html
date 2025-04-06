@@ -1,0 +1,32 @@
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</mat-card-actions>
+
+<div class="container">
+  <h2>{{ titrePage }} un utilisateur</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field> <br />
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email">
+    </mat-form-field> <br />
+
+    @if (!isEditMode) {
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password">
+        </mat-form-field>
+    }
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">
+        {{ titrePage }}
+      </button>
+      <button mat-button (click)="goBack()" type="button">Annuler</button>
+    </div>
+  </form>
+</div>

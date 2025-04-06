@@ -1,0 +1,64 @@
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</mat-card-actions>
+
+<div class="container">
+  <h2>{{ titrePage }} un sale</h2>
+  <form [formGroup]="saleForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Titre</mat-label>
+      <input matInput formControlName="titre" type="text">
+    </mat-form-field> <br />
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput
+              formControlName="description"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="5"
+              cdkAutosizeMaxRows="5"></textarea>
+      
+    </mat-form-field> <br />
+
+  @if (clients) {
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>clients</mat-label>
+    <mat-select formControlName="customer_id">
+    @for (client of clients; track client.id) {
+      <mat-option [value]="client.id">
+        {{client.surnom}}  
+      </mat-option>
+    }
+    </mat-select>
+    
+    @if (saleForm.get('customer_id')?.hasError('required')) {
+      <mat-error>
+        La sélection d'un client est requise
+      </mat-error>
+    }
+  </mat-form-field>      
+  }
+
+    <mat-card-content>
+      <div class="materials-container">
+        @for (material of materials; track material.id) {
+          <mat-checkbox
+            [(ngModel)]="material.checked"
+            [formControlName]="'material_' + material.id"
+            color="primary">
+            {{ material.designation }}
+          </mat-checkbox>
+        }          
+          
+      </div>
+    </mat-card-content> 
+    
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!saleForm.valid">
+        {{ titrePage }}
+      </button>
+      <button mat-button [routerLink]="['/sale']" type="button">Annuler</button>
+    </div>
+  </form>
+</div>

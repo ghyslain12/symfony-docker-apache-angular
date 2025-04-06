@@ -1,0 +1,9 @@
+/project/vendor/
+/project/resources/crud-angular/node_modules/
+/project/.env
+/mysql-data/
+.idea/
+/project/run-tests.bat
+/project/resources/crud-angular/.vscode
+/project/nbproject
+/project/resources/crud-angular/nbproject/

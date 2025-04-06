@@ -1,0 +1,24 @@
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</mat-card-actions>
+
+@if (sale) {
+<div class="container">
+  <h2>Sale Details</h2>
+
+  <mat-card class="sale-card">
+      <mat-card-content>
+        <p><strong>Titre </strong> {{sale.titre}}</p>
+        <p><strong>Description </strong> {{sale.description}}</p>
+        <p><strong>Client </strong> {{sale.customer.surnom}}</p>
+        <p><strong>Materiels </strong> 
+        <ul>
+            @for (material of sale.materials; track material.id;) {
+              <li>{{ material.designation }}</li>
+            }
+        </ul>    
+        
+      </mat-card-content>
+  </mat-card> 
+</div>
+}

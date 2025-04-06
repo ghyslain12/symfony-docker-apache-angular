@@ -1,0 +1,15 @@
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</mat-card-actions>
+
+@if (material) {
+<div class="container">
+  <h2>Materiel Details</h2>
+
+  <mat-card class="material-card">
+      <mat-card-content>
+        <p><strong>Designation: </strong> {{material.designation}}</p>
+      </mat-card-content>
+  </mat-card> 
+</div>
+}

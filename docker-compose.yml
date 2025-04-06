@@ -1,0 +1,79 @@
+version: "3.8"
+services:
+    # Mysql database container
+    db:
+        image: mysql:8.0
+        ports:
+            - "3306:3306"
+        container_name: app_db_symfony_angular
+        restart: on-failure
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - db-data:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: 'gigi'
+            MYSQL_DATABASE: 'app'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_USER: 'gigi'
+            MYSQL_PASSWORD: 'gigi'
+        networks:
+            - app_symfony_angular
+            
+    # phpmyadmin container
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: app_phpmyadmin_symfony_angular
+        restart: on-failure
+        depends_on:
+            - db
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: db
+            PMA_USER: root
+            PMA_PASSWORD: gigi
+        networks:
+            - app_symfony_angular        
+
+    # server apache container
+    app:
+        build:
+            context: . 
+            dockerfile: docker/Dockerfile  
+        container_name: symfony_app
+        restart: on-failure
+        volumes:
+            - ./docker/vhosts:/etc/apache2/sites-enabled
+            - ./project:/var/www
+        ports:
+            - "8741:80"
+        depends_on:
+            - db
+        networks:
+            - app_symfony_angular
+
+    # angular container
+    angular-app:
+        build:
+            context: ./project/resources/crud-angular
+            dockerfile: Dockerfile
+        container_name: angular_app2
+        restart: on-failure
+        ports:
+            - "4200:4200"
+        volumes:
+            - ./project/resources/crud-angular:/app
+            - /app/node_modules
+        environment:
+            - NODE_ENV=development          
+        networks:
+            - app_symfony_angular
+
+                 
+networks:
+  app_symfony_angular:
+    driver: bridge 
+
+volumes:
+    db-data:

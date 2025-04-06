@@ -1,0 +1,20 @@
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</mat-card-actions>
+
+<div class="container">
+  <h2>{{ titrePage }} un material</h2>
+  <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Designation</mat-label>
+      <input matInput formControlName="designation" type="designation">
+    </mat-form-field> <br />
+      
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!materialForm.valid">
+        {{ titrePage }}
+      </button>
+      <button mat-button [routerLink]="['/material']" type="button">Annuler</button>
+    </div>
+  </form>
+</div>
