@@ -1,7 +1,7 @@
 
 # CRUD Docker Symfony Angular
 
-Simple CRUD avec API Symfony 10 et front-end Angular 19 et MySQL et phpMyAdmin sous Docker.
+Simple CRUD avec API Symfony 6.4 et front-end Angular 19 et MySQL et phpMyAdmin sous Docker.
 
 
 ## Prérequis
